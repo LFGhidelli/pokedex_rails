@@ -1,7 +1,14 @@
 <div class="pokemon-container" >
   <div class="pokemon-title">
-    <%= image_tag('pokeball.svg') %>
-    <h1>Pokédex</h1>
+    <h1><%= image_tag('pokeball.svg') %> Pokédex</h1>
+    <%= form_with url: pokemons_path, method: :get, class: "search_bar d-flex" do %>
+      <%= text_field_tag :id,
+            params[:id],
+            class: "form-control",
+            placeholder: "Pokemon ID"
+        %>
+      <%= submit_tag "Search", name: "", class: "btn btn-success" %>
+    <% end %>
   </div>
 
   <div class="pokemon-list">

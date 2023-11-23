@@ -1,7 +1,21 @@
 require 'httparty'
 class PokemonsController < ApplicationController
   def index
-    @pokemons = fetch_pokemons
+
+    if params[:id].present?
+      @pokemons = []
+      response = HTTParty.get("https://pokeapi.co/api/v2/pokemon/#{params[:id]}")
+      if response.success?
+        @pokemons << {
+          id: response["id"],
+          name: response["name"],
+          sprite_url: response["sprites"]["front_default"]
+        }
+      end
+      @pokemons
+    else
+      @pokemons = fetch_pokemons
+    end
   end
 
   def show
@@ -13,7 +27,7 @@ class PokemonsController < ApplicationController
   private
 
   def fetch_pokemons
-    max_pokemon = 151
+    max_pokemon = 9
 
     Rails.cache.fetch("pokemons_data", expires_in: 12.hours) do
       pokemons = []
