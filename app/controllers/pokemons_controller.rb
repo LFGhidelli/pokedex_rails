@@ -27,7 +27,7 @@ class PokemonsController < ApplicationController
   private
 
   def fetch_pokemons
-    max_pokemon = 9
+    max_pokemon = 151
 
     Rails.cache.fetch("pokemons_data", expires_in: 12.hours) do
       pokemons = []
